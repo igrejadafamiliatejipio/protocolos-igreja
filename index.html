@@ -1,589 +1,533 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protocolos & Validação Ministerial</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protocolos Ministeriais - Árvore de Decisão</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f6f6f6',
+              100: '#e7e7e7',
+              200: '#d1d1d1',
+              800: '#1f1f1f',
+              900: '#111111',
+              950: '#0a0a0a',
+            }
+          }
         }
-        .step-transition {
-            transition: all 0.3s ease-in-out;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-        }
-        /* Fade animation for questions */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-    </style>
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    .fade-in {
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
-<body class="min-h-screen text-slate-800 flex flex-col justify-between antialiased">
+<body class="bg-gray-100 text-gray-900 min-h-screen flex flex-col justify-between">
 
-    <!-- Header / Navbar -->
-    <header class="bg-indigo-900 text-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="resetApp()">
-                <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow">
-                    <i class="fa-solid fa-church text-lg"></i>
-                </div>
-                <div>
-                    <h1 class="font-bold text-lg leading-tight">Portal Ministerial</h1>
-                    <p class="text-xs text-indigo-200">Protocolos e Validação de Requisitos</p>
-                </div>
-            </div>
-            <button onclick="resetApp()" class="text-xs bg-indigo-800 hover:bg-indigo-700 px-3 py-2 rounded-lg transition flex items-center gap-2 border border-indigo-700">
-                <i class="fa-solid fa-rotate-left"></i>
-                <span class="hidden sm:inline">Reiniciar</span>
+  <!-- Header / Top Banner -->
+  <header class="bg-black text-white py-6 px-4 shadow-md">
+    <div class="max-w-3xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <i class="fa-solid font-bold fa-church text-2xl text-gray-200"></i>
+        <div>
+          <h1 class="text-xl font-bold tracking-tight">Protocolos Ministeriais</h1>
+          <p class="text-xs text-gray-400">Validação de Requisitos e Processos</p>
+        </div>
+      </div>
+      <button id="btnReset" onclick="resetApp()" class="hidden text-xs bg-gray-800 hover:bg-gray-700 text-gray-200 px-3 py-1.5 rounded-lg transition border border-gray-700 items-center gap-1">
+        <i class="fa-solid fa-rotate-left"></i> Reiniciar
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="max-w-3xl w-full mx-auto p-4 flex-grow my-4">
+
+    <!-- Step 1: Protocol Selection -->
+    <div id="sectionSelection" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 fade-in">
+      <h2 class="text-lg font-bold text-gray-900 mb-1">Selecione o Protocolo</h2>
+      <p class="text-sm text-gray-600 mb-6">Escolha o processo que deseja validar para iniciar o fluxo de decisão.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Batismo -->
+        <button onclick="startProtocol('batismo')" class="flex flex-col items-center justify-center p-6 bg-white border-2 border-gray-200 hover:border-black rounded-xl transition group text-center shadow-sm hover:shadow-md">
+          <div class="w-12 h-12 bg-gray-100 group-hover:bg-black group-hover:text-white text-black rounded-full flex items-center justify-center text-xl mb-3 transition">
+            <i class="fa-solid fa-water"></i>
+          </div>
+          <span class="font-bold text-gray-900 group-hover:text-black">Batismo</span>
+          <span class="text-xs text-gray-500 mt-1">Validação de fé, discipulado e estado civil</span>
+        </button>
+
+        <!-- Encontro com Deus -->
+        <button onclick="startProtocol('encontro')" class="flex flex-col items-center justify-center p-6 bg-white border-2 border-gray-200 hover:border-black rounded-xl transition group text-center shadow-sm hover:shadow-md">
+          <div class="w-12 h-12 bg-gray-100 group-hover:bg-black group-hover:text-white text-black rounded-full flex items-center justify-center text-xl mb-3 transition">
+            <i class="fa-solid fa-cross"></i>
+          </div>
+          <span class="font-bold text-gray-900 group-hover:text-black">Encontro com Deus</span>
+          <span class="text-xs text-gray-500 mt-1">Frequência em PG e Pré-Encontro</span>
+        </button>
+
+        <!-- Voluntariado -->
+        <button onclick="startProtocol('voluntariado')" class="flex flex-col items-center justify-center p-6 bg-white border-2 border-gray-200 hover:border-black rounded-xl transition group text-center shadow-sm hover:shadow-md">
+          <div class="w-12 h-12 bg-gray-100 group-hover:bg-black group-hover:text-white text-black rounded-full flex items-center justify-center text-xl mb-3 transition">
+            <i class="fa-solid fa-hand-holding-heart"></i>
+          </div>
+          <span class="font-bold text-gray-900 group-hover:text-black">Voluntariado</span>
+          <span class="text-xs text-gray-500 mt-1">Serviço, membresia e vida cristã</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2: Active Protocol Question Card -->
+    <div id="sectionQuestion" class="hidden bg-white rounded-2xl shadow-sm border border-gray-200 p-6 fade-in">
+      <!-- Breadcrumb / Progress Header -->
+      <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-100">
+        <span id="protocolBadge" class="text-xs font-bold uppercase tracking-wider bg-black text-white px-3 py-1 rounded-full">
+          Batismo
+        </span>
+        <span id="stepCounter" class="text-xs font-medium text-gray-500">
+          Pergunta 1
+        </span>
+      </div>
+
+      <!-- Question Title & Subtext -->
+      <h3 id="questionTitle" class="text-xl font-bold text-gray-900 mb-2">
+        A pessoa aceitou a Cristo e professa a fé como único Salvador?
+      </h3>
+      <p id="questionDescription" class="text-sm text-gray-600 mb-6">
+        Confirmação do compromisso e conversão pessoal do candidato.
+      </p>
+
+      <!-- Options Container (Buttons or Selects) -->
+      <div id="optionsContainer" class="flex flex-col sm:flex-row gap-3">
+        <!-- Dynamic buttons rendered by JS -->
+      </div>
+    </div>
+
+    <!-- Step 3: Final Result Card -->
+    <div id="sectionResult" class="hidden rounded-2xl shadow-sm border p-6 fade-in">
+      <div class="flex items-start gap-4">
+        <div id="resultIcon" class="w-12 h-12 rounded-full flex items-center justify-center text-2xl flex-shrink-0">
+          <!-- Icon injected by JS -->
+        </div>
+        <div class="flex-grow">
+          <span id="resultBadge" class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md mb-2 inline-block">
+            Resultado
+          </span>
+          <h3 id="resultTitle" class="text-xl font-bold mb-2">
+            Status do Protocolo
+          </h3>
+          <p id="resultMessage" class="text-sm leading-relaxed mb-6">
+            Mensagem orientativa.
+          </p>
+
+          <div class="pt-4 border-t border-gray-200 flex flex-wrap gap-3">
+            <button onclick="resetApp()" class="bg-black hover:bg-gray-800 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition shadow-sm">
+              <i class="fa-solid fa-arrow-left mr-2"></i>Validar Outra Pessoa
             </button>
+          </div>
         </div>
-    </header>
+      </div>
+    </div>
 
-    <!-- Main Container -->
-    <main class="max-w-4xl w-full mx-auto p-4 sm:p-6 flex-grow flex flex-col justify-center">
+  </main>
 
-        <!-- 1. PROTOCOL SELECTOR SCREEN -->
-        <div id="screen-selector" class="animate-fade-in space-y-6">
-            <div class="text-center max-w-xl mx-auto">
-                <span class="text-xs font-semibold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">Árvore de Decisão</span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Selecione o Protocolo</h2>
-                <p class="text-slate-600 text-sm mt-1">Siga o fluxo de triagem para conferir se o membro cumpre todos os requisitos antes do processo.</p>
-            </div>
+  <!-- Footer -->
+  <footer class="bg-white border-t border-gray-200 py-4 text-center text-xs text-gray-500">
+    <p>© Protocolos e Validações Ministeriais - Uso Interno</p>
+  </footer>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
-                <!-- Batismo Card -->
-                <button onclick="startProtocol('batismo')" class="group p-6 bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-indigo-500 hover:shadow-md transition text-left flex flex-col justify-between">
-                    <div>
-                        <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-water"></i>
-                        </div>
-                        <h3 class="font-bold text-lg text-slate-900 group-hover:text-indigo-600 transition">Batismo nas Águas</h3>
-                        <p class="text-xs text-slate-500 mt-2">Verificação de conversão, pequeno grupo, apostila e validação de estado civil.</p>
-                    </div>
-                    <div class="mt-6 flex items-center text-xs font-semibold text-indigo-600 group-hover:translate-x-1 transition-transform">
-                        Iniciar Validação <i class="fa-solid fa-arrow-right ml-2"></i>
-                    </div>
-                </button>
+  <!-- Decision Tree Logic JS -->
+  <script>
+    // PROTOCOLS DATA STRUCTURE
+    const protocols = {
+      batismo: {
+        title: "Batismo nas Águas",
+        startNode: "q_conversao",
+        nodes: {
+          q_conversao: {
+            title: "A pessoa aceitou a Cristo e professa a fé em Jesus como único e suficiente Salvador?",
+            desc: "O batismo é uma declaração pública de fé para quem já se converteu.",
+            options: [
+              { label: "SIM", next: "q_rede" },
+              { label: "NÃO", next: "blocked_conversao" }
+            ]
+          },
+          q_rede: {
+            title: "A pessoa faz parte de uma Rede ou Pequeno Grupo (PG / Célula)?",
+            desc: "A integração na comunidade local é essencial para o acompanhamento pastoral.",
+            options: [
+              { label: "SIM", next: "q_apostila" },
+              { label: "NÃO", next: "blocked_rede" }
+            ]
+          },
+          q_apostila: {
+            title: "A pessoa concluiu o estudo / apostila 'Novo Nascimento'?",
+            desc: "Ensino fundamentado sobre as verdades básicas do batismo e da caminhada cristã.",
+            options: [
+              { label: "SIM", next: "q_estado_civil" },
+              { label: "NÃO", next: "blocked_apostila" }
+            ]
+          },
+          q_estado_civil: {
+            title: "Qual é o Estado Civil da pessoa?",
+            desc: "Selecione a situação conjugal para validação da coerência ministerial.",
+            type: "choice",
+            options: [
+              { label: "Solteiro(a)", next: "q_solteiro_mora_junto" },
+              { label: "Casado(a)", next: "q_casado_papel" },
+              { label: "Divorciado(a)", next: "q_divorciado_papel" },
+              { label: "Viúvo(a)", next: "approved_batismo" }
+            ]
+          },
+          q_solteiro_mora_junto: {
+            title: "Sendo solteiro(a), mora/vive junto com companheiro(a) sem casamento oficial?",
+            desc: "Validação da situação de união estável / coabitação informal.",
+            options: [
+              { label: "SIM", next: "blocked_solteiro_mora_junto" },
+              { label: "NÃO", next: "approved_batismo" }
+            ]
+          },
+          q_casado_papel: {
+            title: "Possui certidão de Casamento Civil oficializada?",
+            desc: "Verificação de regularização perante a lei civil.",
+            options: [
+              { label: "SIM", next: "approved_batismo" },
+              { label: "NÃO", next: "blocked_casado_sem_papel" }
+            ]
+          },
+          q_divorciado_papel: {
+            title: "O divórcio está 100% oficializado no papel perante a justiça?",
+            desc: "Verificação de pendências legais no estado civil.",
+            options: [
+              { label: "SIM", next: "approved_batismo" },
+              { label: "NÃO", next: "blocked_divorciado_sem_papel" }
+            ]
+          },
 
-                <!-- Encontro com Deus Card -->
-                <button onclick="startProtocol('encontro')" class="group p-6 bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-indigo-500 hover:shadow-md transition text-left flex flex-col justify-between">
-                    <div>
-                        <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-mountain-sun"></i>
-                        </div>
-                        <h3 class="font-bold text-lg text-slate-900 group-hover:text-indigo-600 transition">Encontro com Deus</h3>
-                        <p class="text-xs text-slate-500 mt-2">Validação de pré-encontros, frequência em células e autorização do líder.</p>
-                    </div>
-                    <div class="mt-6 flex items-center text-xs font-semibold text-indigo-600 group-hover:translate-x-1 transition-transform">
-                        Iniciar Validação <i class="fa-solid fa-arrow-right ml-2"></i>
-                    </div>
-                </button>
+          // BLOQUEIOS COM REGRAS ESPECÍFICAS
+          blocked_conversao: {
+            type: "result",
+            status: "blocked",
+            title: "BLOQUEADO - Conversão Pendente",
+            message: "A pessoa NÃO pode se batizar sem antes entregar sua vida para Jesus e professar a fé em Cristo como seu único e suficiente Salvador. Aconselha-se acompanhamento pastoral e integração aos cultos."
+          },
+          blocked_rede: {
+            type: "result",
+            status: "blocked",
+            title: "BLOQUEADO - Integração em Rede / PG Pendente",
+            message: "A pessoa NÃO pode se batizar sem antes fazer parte de uma Rede ou Pequeno Grupo (PG / Célula). É fundamental que ela esteja integrada em uma comunidade e receba acompanhamento antes de tomar esta decisão."
+          },
+          blocked_apostila: {
+            type: "result",
+            status: "blocked",
+            title: "BLOQUEADO - Curso 'Novo Nascimento' Incompleto",
+            message: "A pessoa NÃO pode se batizar sem antes concluir a apostila/estudo 'Novo Nascimento'. Ela precisa concluir as lições básicas de doutrina cristã para compreender o significado bíblico do batismo."
+          },
+          blocked_solteiro_mora_junto: {
+            type: "result",
+            status: "blocked",
+            title: "BLOQUEADO - Coabitação sem Casamento Civil",
+            message: "A pessoa se declara solteira, mas vive sob o mesmo teto com companheiro(a) sem oficializar o casamento. Para ser batizada, necessita regularizar sua união no civil através do casamento ou ajustar sua situação conjugal perante os princípios bíblicos."
+          },
+          blocked_casado_sem_papel: {
+            type: "result",
+            status: "blocked",
+            title: "BLOQUEADO - Casamento Não Oficializado no Civil",
+            message: "A pessoa vive como casada, mas não possui certidão de casamento civil. Ela NÃO pode ser batizada enquanto não oficializar a união no cartório civil, regularizando sua situação perante as leis e a igreja."
+          },
+          blocked_divorciado_sem_papel: {
+            type: "result",
+            status: "blocked",
+            title: "BLOQUEADO - Divórcio Não Finalizado Legalmente",
+            message: "A pessoa está separada na prática, mas o divórcio não foi concluído oficialmente no papel perante a justiça. Ela NÃO pode se batizar até que o processo legal do divórcio esteja 100% homologado e oficializado."
+          },
 
-                <!-- Voluntariado Card -->
-                <button onclick="startProtocol('voluntariado')" class="group p-6 bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-indigo-500 hover:shadow-md transition text-left flex flex-col justify-between">
-                    <div>
-                        <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-hand-holding-heart"></i>
-                        </div>
-                        <h3 class="font-bold text-lg text-slate-900 group-hover:text-indigo-600 transition">Voluntariado</h3>
-                        <p class="text-xs text-slate-500 mt-2">Serviço ministerial, curso de membresia, batismo e alinhamento pastoral.</p>
-                    </div>
-                    <div class="mt-6 flex items-center text-xs font-semibold text-indigo-600 group-hover:translate-x-1 transition-transform">
-                        Iniciar Validação <i class="fa-solid fa-arrow-right ml-2"></i>
-                    </div>
-                </button>
-            </div>
-        </div>
-
-        <!-- 2. QUESTION WIZARD SCREEN -->
-        <div id="screen-wizard" class="hidden animate-fade-in max-w-2xl mx-auto w-full">
-            <!-- Progress Bar -->
-            <div class="mb-6">
-                <div class="flex justify-between items-center text-xs text-slate-500 font-medium mb-2">
-                    <span id="protocol-badge" class="font-semibold text-indigo-600 uppercase tracking-wider">Protocolo</span>
-                    <span id="progress-text">Passo 1 de 4</span>
-                </div>
-                <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-                    <div id="progress-bar" class="bg-indigo-600 h-full w-1/4 transition-all duration-300"></div>
-                </div>
-            </div>
-
-            <!-- Card Question Box -->
-            <div class="bg-white rounded-2xl shadow-lg border border-slate-200/80 p-6 sm:p-8">
-                <!-- Dynamic Question Content -->
-                <div id="question-container">
-                    <!-- Title & Icon -->
-                    <div class="flex items-center gap-3 mb-4 text-indigo-600">
-                        <i id="question-icon" class="fa-solid fa-circle-question text-xl"></i>
-                        <span id="question-category" class="text-xs font-semibold uppercase tracking-wider text-slate-400">Requisito</span>
-                    </div>
-                    
-                    <h3 id="question-text" class="text-xl sm:text-2xl font-bold text-slate-900 mb-2 leading-tight">
-                        Carregando pergunta...
-                    </h3>
-                    <p id="question-subtext" class="text-sm text-slate-500 mb-6">
-                        Descrição ou ajuda adicional para esta etapa.
-                    </p>
-
-                    <!-- Interactive Options Container -->
-                    <div id="options-container" class="space-y-3">
-                        <!-- Buttons render dynamically here -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Back/Navigation Option -->
-            <div class="mt-4 flex justify-between items-center px-2">
-                <button onclick="previousStep()" id="btn-back" class="text-xs font-semibold text-slate-500 hover:text-slate-800 flex items-center gap-1 transition">
-                    <i class="fa-solid fa-chevron-left"></i> Voltar pergunta anterior
-                </button>
-                <button onclick="resetApp()" class="text-xs font-semibold text-slate-400 hover:text-slate-600 transition">
-                    Cancelar
-                </button>
-            </div>
-        </div>
-
-        <!-- 3. RESULT SCREEN -->
-        <div id="screen-result" class="hidden animate-fade-in max-w-2xl mx-auto w-full">
-            <div id="result-card" class="rounded-2xl shadow-xl border p-6 sm:p-8 text-center bg-white">
-                <!-- Icon Badge -->
-                <div id="result-icon-bg" class="w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 shadow-inner">
-                    <i id="result-icon" class="fa-solid fa-check"></i>
-                </div>
-
-                <span id="result-badge" class="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full inline-block mb-3">
-                    Status
-                </span>
-
-                <h2 id="result-title" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2">
-                    Resultado da Validação
-                </h2>
-
-                <p id="result-description" class="text-slate-600 text-sm sm:text-base max-w-lg mx-auto mb-6">
-                    Descrição detalhada do resultado.
-                </p>
-
-                <!-- Guidance Box -->
-                <div id="guidance-box" class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-left mb-6 text-sm">
-                    <h4 class="font-bold text-slate-800 mb-1 flex items-center gap-2">
-                        <i class="fa-solid fa-compass text-indigo-600"></i> Orientação Pastoral / Próximo Passo:
-                    </h4>
-                    <p id="guidance-text" class="text-slate-600">Instrução para a liderança proceder.</p>
-                </div>
-
-                <!-- History / Path Summary -->
-                <div class="border-t border-slate-100 pt-4 mb-6 text-left">
-                    <button onclick="toggleSummary()" class="text-xs font-semibold text-indigo-600 hover:underline flex items-center justify-between w-full">
-                        <span>Ver Resumo das Respostas</span>
-                        <i id="summary-chevron" class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div id="summary-content" class="hidden mt-3 space-y-2 text-xs text-slate-600 bg-slate-50 p-3 rounded-lg border border-slate-100">
-                        <!-- Populated by JavaScript -->
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                    <button onclick="resetApp()" class="w-full sm:w-auto px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition text-sm shadow">
-                        Nova Consulta
-                    </button>
-                    <button onclick="window.print()" class="w-full sm:w-auto px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl transition text-sm flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-print"></i> Imprimir / Salvar
-                    </button>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 mt-8">
-        <p>© Portal Ministerial — Sistema de Protocolos & Decisão Interna</p>
-    </footer>
-
-    <!-- JavaScript Logic -->
-    <script>
-        // Protocols Flow Data Definitions
-        const PROTOCOLS = {
-            batismo: {
-                title: "Batismo nas Águas",
-                steps: [
-                    {
-                        id: "fe",
-                        category: "Fé & Conversão",
-                        icon: "fa-cross",
-                        question: "A pessoa é convertida e professa livremente a fé em Jesus como Salvador?",
-                        subtext: "Verifique se a pessoa teve uma experiência pessoal e sincera de conversão.",
-                        options: [
-                            { text: "Sim, é convertida", nextStep: "pg", value: "Convertido(a)" },
-                            { text: "Não / Em dúvida", block: "A pessoa precisa passar pelo acompanhamento pastoral e consolidação antes de prosseguir para o batismo.", reason: "Necessita de consolidação na fé" }
-                        ]
-                    },
-                    {
-                        id: "pg",
-                        category: "Comunhão & Discipulado",
-                        icon: "fa-users",
-                        question: "Faz parte ativamente de uma Rede / Pequeno Grupo (PG / Célula)?",
-                        subtext: "O batismo exige vínculo e acompanhamento em uma comunidade de fé.",
-                        options: [
-                            { text: "Sim, participa ativamente", nextStep: "apostila", value: "Participa de PG/Célula" },
-                            { text: "Não participa", block: "Encaminhar o candidato para inserção em uma Célula ou Pequeno Grupo da igreja.", reason: "Falta de integração em Pequeno Grupo" }
-                        ]
-                    },
-                    {
-                        id: "apostila",
-                        category: "Ensino & Doutrina",
-                        icon: "fa-book-open",
-                        question: "Concluiu a apostila ou curso 'Novo Nascimento'?",
-                        subtext: "Confirme se concluiu os estudos básicos para a compreensão das doutrinas da fé.",
-                        options: [
-                            { text: "Sim, concluiu", nextStep: "estado_civil", value: "Concluiu 'Novo Nascimento'" },
-                            { text: "Não concluiu", block: "Orientar e encaminhar o candidato para realizar o curso 'Novo Nascimento'.", reason: "Pendente de conclusão do curso preparatório" }
-                        ]
-                    },
-                    {
-                        id: "estado_civil",
-                        category: "Vida Familiar & Civil",
-                        icon: "fa-ring",
-                        question: "Qual é o Estado Civil do(a) candidato(a)?",
-                        subtext: "A situação conjugal precisa estar em conformidade legal e princípios bíblicos.",
-                        type: "select",
-                        options: [
-                            { text: "Solteiro(a)", nextStep: "solteiro_morando_junto", value: "Solteiro(a)" },
-                            { text: "Casado(a)", nextStep: "casado_papel", value: "Casado(a)" },
-                            { text: "Divorciado(a)", nextStep: "divorciado_papel", value: "Divorciado(a)" },
-                            { text: "Viúvo(a)", approve: true, value: "Viúvo(a)" }
-                        ]
-                    },
-                    // Sub-questions for Estado Civil
-                    {
-                        id: "solteiro_morando_junto",
-                        category: "Validação Conjugal",
-                        icon: "fa-house-user",
-                        question: "Mora ou vive junto com companheiro(a) sem casamento civil?",
-                        subtext: "Convivência como casal sem oficialização legal perante a lei.",
-                        options: [
-                            { text: "Sim (Vive junto)", block: "O batismo não pode ocorrer na condição de união estável informal. Orientar o casal sobre a regularização no Casamento Civil.", reason: "União estável sem casamento civil" },
-                            { text: "Não (Mora só ou com os pais)", approve: true, value: "Solteiro(a) regularizado(a)" }
-                        ]
-                    },
-                    {
-                        id: "casado_papel",
-                        category: "Validação Conjugal",
-                        icon: "fa-file-contract",
-                        question: "Possui Certidão de Casamento Civil oficializada?",
-                        subtext: "A união conjugal deve ser oficialmente reconhecida em cartório.",
-                        options: [
-                            { text: "Sim, casados no papel", approve: true, value: "Casado(a) no civil" },
-                            { text: "Não (Apenas união de fato)", block: "O matrimônio precisa ser oficializado no cartório antes de prosseguir ao batismo.", reason: "Casamento não oficializado no civil" }
-                        ]
-                    },
-                    {
-                        id: "divorciado_papel",
-                        category: "Validação Conjugal",
-                        icon: "fa-scale-balanced",
-                        question: "O divórcio está 100% averbado / oficializado no papel?",
-                        subtext: "É necessária a certidão com a averbação de divórcio finalizada legalmente.",
-                        options: [
-                            { text: "Sim, divórcio averbado", approve: true, value: "Divorciado(a) legalmente" },
-                            { text: "Não (Em processo ou separação de fato)", block: "A situação do divórcio ainda pendente no papel impede o batismo. Encaminhar para acompanhamento e regularização jurídica.", reason: "Pendência jurídica no divórcio" }
-                        ]
-                    }
-                ]
-            },
-            encontro: {
-                title: "Encontro com Deus",
-                steps: [
-                    {
-                        id: "fe",
-                        category: "Fé & Decisão",
-                        icon: "fa-heart",
-                        question: "Aceitou a Jesus e professou sua conversão?",
-                        subtext: "Confirmar se o participante entende a decisão de seguir a Cristo.",
-                        options: [
-                            { text: "Sim, converteu-se", nextStep: "pre_encontro", value: "Convertido(a)" },
-                            { text: "Não / Visitante", block: "Aconselha-se primeiro passar pela consolidação antes de ir ao Encontro com Deus.", reason: "Necessita de consolidação prévia" }
-                        ]
-                    },
-                    {
-                        id: "pre_encontro",
-                        category: "Preparo Espiritual",
-                        icon: "fa-chalkboard-user",
-                        question: "Frequentou as aulas do Pré-Encontro?",
-                        subtext: "Participação nas lições preparatórias de alinhamento.",
-                        options: [
-                            { text: "Sim, concluiu o Pré-Encontro", nextStep: "celula", value: "Concluiu Pré-Encontro" },
-                            { text: "Não concluiu", block: "O participante deve obrigatoriamente fazer as aulas de Pré-Encontro para estar preparado espiritualmente.", reason: "Falta de aulas do Pré-Encontro" }
-                        ]
-                    },
-                    {
-                        id: "celula",
-                        category: "Vínculo na Igreja",
-                        icon: "fa-users-line",
-                        question: "Participa ativamente de uma Célula / PG?",
-                        subtext: "É fundamental ter cobertura e acompanhamento da liderança após o evento.",
-                        options: [
-                            { text: "Sim, frequenta célula", nextStep: "liberacao_lider", value: "Frequenta Célula/PG" },
-                            { text: "Não frequenta", block: "Integrar o participante em uma Célula antes de enviá-lo ao Encontro.", reason: "Sem vínculo com Célula/PG" }
-                        ]
-                    },
-                    {
-                        id: "liberacao_lider",
-                        category: "Aprovação Ministerial",
-                        icon: "fa-user-check",
-                        question: "Possui a liberação e recomendação do Líder de Célula?",
-                        subtext: "Avaliação da maturidade e concordância do líder direto.",
-                        options: [
-                            { text: "Sim, recomendado pelo líder", approve: true, value: "Recomendado pelo Líder" },
-                            { text: "Não recomendado no momento", block: "O líder direto indicou a necessidade de maior acompanhamento antes da ida ao evento.", reason: "Sem recomendação do líder direto" }
-                        ]
-                    }
-                ]
-            },
-            voluntariado: {
-                title: "Voluntariado / Ministério",
-                steps: [
-                    {
-                        id: "batizado",
-                        category: "Aliança com Deus",
-                        icon: "fa-water",
-                        question: "É batizado(a) nas águas?",
-                        subtext: "O voluntariado exige o compromisso do batismo nas águas.",
-                        options: [
-                            { text: "Sim, é batizado(a)", nextStep: "encontro_passado", value: "Batizado(a) nas águas" },
-                            { text: "Não é batizado(a)", block: "Para servir na equipe de voluntários, o membro precisa primeiro realizar o Batismo nas Águas.", reason: "Não possui batismo nas águas" }
-                        ]
-                    },
-                    {
-                        id: "encontro_passado",
-                        category: "Cura & Libertação",
-                        icon: "fa-mountain-sun",
-                        question: "Passou pelo Encontro com Deus?",
-                        subtext: "Vivência de cura interior e alinhamento espiritual.",
-                        options: [
-                            { text: "Sim, participou do Encontro", nextStep: "escola_lideres", value: "Passou pelo Encontro" },
-                            { text: "Não participou", block: "Recomenda-se realizar o Encontro com Deus antes de assumir responsabilidades de voluntariado.", reason: "Pendente de Encontro com Deus" }
-                        ]
-                    },
-                    {
-                        id: "escola_lideres",
-                        category: "Capacitação & Membresia",
-                        icon: "fa-graduation-cap",
-                        question: "Concluiu a Escola de Líderes ou Cursos de Membresia?",
-                        subtext: "Formação doutrinária e princípios da igreja local.",
-                        options: [
-                            { text: "Sim, concluiu os cursos", nextStep: "situacao_regular", value: "Curso de Membresia/Líderes Concluído" },
-                            { text: "Não concluiu", block: "Matricular o candidato no curso de Membresia / Escola de Formação.", reason: "Pendente de capacitação ministerial" }
-                        ]
-                    },
-                    {
-                        id: "situacao_regular",
-                        category: "Testemunho & Conduta",
-                        icon: "fa-shield-halved",
-                        question: "Está com a situação civil e ministerial totalmente regularizada?",
-                        subtext: "Vida pessoal em ordem com a Palavra e sem disciplinas vigentes.",
-                        options: [
-                            { text: "Sim, totalmente regularizado(a)", approve: true, value: "Vida e Situação Regular" },
-                            { text: "Possui pendências de conduta ou civil", block: "Agendar conversa com o Pastor/Líder de rede para alinhar e regularizar as pendências.", reason: "Pendências éticas, matrimoniais ou pastorais" }
-                        ]
-                    }
-                ]
-            }
-        };
-
-        // Application State Variables
-        let currentProtocolKey = null;
-        let currentStepIndex = 0;
-        let userAnswersHistory = [];
-
-        // DOM Elements
-        const screenSelector = document.getElementById('screen-selector');
-        const screenWizard = document.getElementById('screen-wizard');
-        const screenResult = document.getElementById('screen-result');
-
-        // Start Selected Protocol
-        function startProtocol(protocolKey) {
-            currentProtocolKey = protocolKey;
-            currentStepIndex = 0;
-            userAnswersHistory = [];
-
-            screenSelector.classList.add('hidden');
-            screenWizard.classList.remove('hidden');
-            screenResult.classList.add('hidden');
-
-            document.getElementById('protocol-badge').innerText = PROTOCOLS[protocolKey].title;
-            renderStep();
+          // APROVAÇÃO
+          approved_batismo: {
+            type: "result",
+            status: "approved",
+            title: "APROVADO PARA O BATISMO",
+            message: "Parabéns! O candidato cumpriu todos os pré-requisitos espirituais, doutrinários e de estado civil. Está devidamente liberado para agendar e realizar o Batismo nas Águas!"
+          }
         }
+      },
 
-        // Render Current Question/Step
-        function renderStep() {
-            const protocol = PROTOCOLS[currentProtocolKey];
-            const step = protocol.steps[currentStepIndex];
+      encontro: {
+        title: "Encontro com Deus",
+        startNode: "q_frequencia_pg",
+        nodes: {
+          q_frequencia_pg: {
+            title: "A pessoa frequenta regularmente a célula / Pequeno Grupo?",
+            desc: "Requisito de vinculação e acompanhamento com a liderança local.",
+            options: [
+              { label: "SIM", next: "q_pre_encontro" },
+              { label: "NÃO", next: "blocked_pg_encontro" }
+            ]
+          },
+          q_pre_encontro: {
+            title: "Concluiu as aulas/estudos do Pré-Encontro?",
+            desc: "Preparação ministrada antes da ida ao evento.",
+            options: [
+              { label: "SIM", next: "q_idade_encontro" },
+              { label: "NÃO", next: "blocked_pre_encontro" }
+            ]
+          },
+          q_idade_encontro: {
+            title: "A pessoa tem a idade mínima/perfil recomendado para esta edição?",
+            desc: "Alinhamento com a faixa etária do evento (Kids, Jovens, Adultos).",
+            options: [
+              { label: "SIM", next: "approved_encontro" },
+              { label: "NÃO", next: "blocked_idade_encontro" }
+            ]
+          },
 
-            // Update Progress
-            const totalSteps = protocol.steps.length;
-            const progressPercent = ((currentStepIndex + 1) / totalSteps) * 100;
-            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
-            document.getElementById('progress-text').innerText = `Passo ${currentStepIndex + 1} de ${totalSteps}`;
+          // BLOQUEIOS ENCONTRO
+          blocked_pg_encontro: {
+            type: "result",
+            status: "blocked",
+            title: "BLOQUEADO - Frequência em PG Pendente",
+            message: "A pessoa NÃO pode participar do Encontro com Deus sem antes estar frequentando ativamente uma célula ou Pequeno Grupo. O acompanhamento pós-encontro depende dessa integração."
+          },
+          blocked_pre_encontro: {
+            type: "result",
+            status: "blocked",
+            title: "BLOQUEADO - Pré-Encontro Não Concluído",
+            message: "A pessoa NÃO pode ir ao Encontro com Deus sem ter feito o Pré-Encontro. As ministrações de preparação são obrigatórias para o aproveitamento do retiro."
+          },
+          blocked_idade_encontro: {
+            type: "result",
+            status: "blocked",
+            title: "BLOQUEADO - Faixa Etária Incompatível",
+            message: "A pessoa NÃO atende ao requisito de idade/perfil específico desta edição do Encontro. Ela deve aguardar a edição adequada para o seu grupo etário (ex: Kids, Jovens ou Adultos)."
+          },
 
-            // Hide Back button if on first step
-            const btnBack = document.getElementById('btn-back');
-            if (currentStepIndex === 0) {
-                btnBack.classList.add('opacity-0', 'pointer-events-none');
-            } else {
-                btnBack.classList.remove('opacity-0', 'pointer-events-none');
-            }
-
-            // Fill Content
-            document.getElementById('question-category').innerText = step.category;
-            document.getElementById('question-text').innerText = step.question;
-            document.getElementById('question-subtext').innerText = step.subtext || '';
-            document.getElementById('question-icon').className = `fa-solid ${step.icon} text-xl`;
-
-            // Build Options Buttons
-            const optionsContainer = document.getElementById('options-container');
-            optionsContainer.innerHTML = '';
-
-            step.options.forEach((opt) => {
-                const button = document.createElement('button');
-                button.className = "w-full text-left p-4 rounded-xl border border-slate-200 hover:border-indigo-600 hover:bg-indigo-50/50 transition font-medium text-slate-800 flex justify-between items-center group shadow-sm bg-slate-50/50";
-                
-                button.innerHTML = `
-                    <span class="text-sm font-semibold">${opt.text}</span>
-                    <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-1 transition-transform text-xs"></i>
-                `;
-
-                button.onclick = () => handleOptionSelect(step, opt);
-                optionsContainer.appendChild(button);
-            });
+          // APROVAÇÃO
+          approved_encontro: {
+            type: "result",
+            status: "approved",
+            title: "APROVADO PARA O ENCONTRO COM DEUS",
+            message: "Tudo certo! O participante cumpre todos os requisitos de presença, estudos e faixa etária. Inscrição e participação liberadas!"
+          }
         }
+      },
 
-        // Handle Option Click
-        function handleOptionSelect(step, option) {
-            // Record answer for history
-            userAnswersHistory.push({
-                question: step.question,
-                answer: option.text,
-                category: step.category,
-                value: option.value || option.text
-            });
+      voluntariado: {
+        title: "Voluntariado / Servir na Igreja",
+        startNode: "q_batizado",
+        nodes: {
+          q_batizado: {
+            title: "A pessoa é batizada nas águas?",
+            desc: "O batismo é o marco de compromisso para servir nos ministérios.",
+            options: [
+              { label: "SIM", next: "q_encontro_servir" },
+              { label: "NÃO", next: "blocked_batismo_voluntario" }
+            ]
+          },
+          q_encontro_servir: {
+            title: "Já participou do Encontro com Deus / Revisão de Vidas?",
+            desc: "Experiência de alinhamento e cura espiritual prévia.",
+            options: [
+              { label: "SIM", next: "q_escola_lideres" },
+              { label: "NÃO", next: "blocked_encontro_voluntario" }
+            ]
+          },
+          q_escola_lideres: {
+            title: "Concluiu o curso de Membresia ou Escola de Formação/Líderes?",
+            desc: "Treinamento doutrinário e visão ministerial da igreja.",
+            options: [
+              { label: "SIM", next: "q_testemunho" },
+              { label: "NÃO", next: "blocked_escola_voluntario" }
+            ]
+          },
+          q_testemunho: {
+            title: "Apresenta bom testemunho e conduta irrepreensível na vida cotidiana?",
+            desc: "Validação da liderança quanto à vida prática e integridade.",
+            options: [
+              { label: "SIM", next: "approved_voluntariado" },
+              { label: "NÃO", next: "blocked_testemunho_voluntario" }
+            ]
+          },
 
-            // Check if blocked/rejected
-            if (option.block) {
-                showResult(false, option.block, option.reason);
-                return;
-            }
+          // BLOQUEIOS VOLUNTARIADO
+          blocked_batismo_voluntario: {
+            type: "result",
+            status: "blocked",
+            title: "BLOQUEADO - Batismo Pendente",
+            message: "A pessoa NÃO pode se tornar voluntária nos ministérios sem antes ser batizada nas águas. O batismo é a porta de entrada para o serviço ativo na casa de Deus."
+          },
+          blocked_encontro_voluntario: {
+            type: "result",
+            status: "blocked",
+            title: "BLOQUEADO - Encontro com Deus Pendente",
+            message: "A pessoa NÃO pode servir nas equipes de voluntariado sem passar pelo Encontro com Deus / Revisão de Vidas. Essa etapa é necessária para alinhamento espiritual e cura."
+          },
+          blocked_escola_voluntario: {
+            type: "result",
+            status: "blocked",
+            title: "BLOQUEADO - Formação/Membresia Incompleta",
+            message: "A pessoa NÃO pode iniciar no voluntariado sem antes concluir o Curso de Membresia / Escola de Treinamento. É essencial compreender a visão e os valores da igreja."
+          },
+          blocked_testemunho_voluntario: {
+            type: "result",
+            status: "blocked",
+            title: "BLOQUEADO - Recomendação Pastoral Pendente",
+            message: "A pessoa NÃO está liberada no momento devido a pendências na conduta ou vida pessoal que necessitam de acompanhamento pastoral e pastoreio antes de assumir o voluntariado."
+          },
 
-            // Check if approved early or finished
-            if (option.approve) {
-                showResult(true, "O membro cumpre todos os requisitos estabelecidos por este protocolo!");
-                return;
-            }
-
-            // Move to specified next step or increment
-            if (option.nextStep) {
-                const protocol = PROTOCOLS[currentProtocolKey];
-                const targetIndex = protocol.steps.findIndex(s => s.id === option.nextStep);
-                if (targetIndex !== -1) {
-                    currentStepIndex = targetIndex;
-                } else {
-                    currentStepIndex++;
-                }
-            } else {
-                currentStepIndex++;
-            }
-
-            // Check if out of steps
-            if (currentStepIndex >= PROTOCOLS[currentProtocolKey].steps.length) {
-                showResult(true, "O membro atende a todos os critérios e pré-requisitos exigidos.");
-            } else {
-                renderStep();
-            }
+          // APROVAÇÃO
+          approved_voluntariado: {
+            type: "result",
+            status: "approved",
+            title: "APROVADO PARA O VOLUNTARIADO",
+            message: "Excelente! A pessoa possui batismo, formação, vivência e bom testemunho. Está qualificada para integrar as equipes de serviço e ministérios da igreja!"
+          }
         }
+      }
+    };
 
-        // Go Back to Previous Question
-        function previousStep() {
-            if (currentStepIndex > 0) {
-                currentStepIndex--;
-                userAnswersHistory.pop();
-                renderStep();
-            }
-        }
+    // STATE VARIABLES
+    let currentProtocolKey = null;
+    let currentNodeKey = null;
+    let stepCount = 1;
 
-        // Display Final Result
-        function showResult(isApproved, guidanceText, reasonText) {
-            screenWizard.classList.add('hidden');
-            screenResult.classList.remove('hidden');
+    // DOM ELEMENTS
+    const sectionSelection = document.getElementById('sectionSelection');
+    const sectionQuestion = document.getElementById('sectionQuestion');
+    const sectionResult = document.getElementById('sectionResult');
+    const btnReset = document.getElementById('btnReset');
 
-            const resultIconBg = document.getElementById('result-icon-bg');
-            const resultIcon = document.getElementById('result-icon');
-            const resultBadge = document.getElementById('result-badge');
-            const resultTitle = document.getElementById('result-title');
-            const resultDescription = document.getElementById('result-description');
-            const guidanceEl = document.getElementById('guidance-text');
+    const protocolBadge = document.getElementById('protocolBadge');
+    const stepCounter = document.getElementById('stepCounter');
+    const questionTitle = document.getElementById('questionTitle');
+    const questionDescription = document.getElementById('questionDescription');
+    const optionsContainer = document.getElementById('optionsContainer');
 
-            guidanceEl.innerText = guidanceText;
+    const resultIcon = document.getElementById('resultIcon');
+    const resultBadge = document.getElementById('resultBadge');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultMessage = document.getElementById('resultMessage');
 
-            if (isApproved) {
-                resultIconBg.className = "w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 bg-emerald-100 text-emerald-600 shadow-inner";
-                resultIcon.className = "fa-solid fa-circle-check";
-                resultBadge.className = "px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full inline-block mb-3 bg-emerald-100 text-emerald-800 border border-emerald-200";
-                resultBadge.innerText = "APROVADO / LIBERADO";
-                resultTitle.innerText = "Apto para o Protocolo!";
-                resultDescription.innerText = `Parabéns! Todos os requisitos para ${PROTOCOLS[currentProtocolKey].title} foram devidamente pré-validados.`;
-            } else {
-                resultIconBg.className = "w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 bg-amber-100 text-amber-600 shadow-inner";
-                resultIcon.className = "fa-solid fa-triangle-exclamation";
-                resultBadge.className = "px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full inline-block mb-3 bg-amber-100 text-amber-800 border border-amber-200";
-                resultBadge.innerText = "PENDENTE / BLOQUEADO";
-                resultTitle.innerText = "Requisito Não Preenchido";
-                resultDescription.innerText = `Motivo: ${reasonText || 'Identificada pendência no processo.'}`;
-            }
+    // START A PROTOCOL
+    function startProtocol(key) {
+      currentProtocolKey = key;
+      const proto = protocols[key];
+      currentNodeKey = proto.startNode;
+      stepCount = 1;
 
-            // Build Answers Summary
-            const summaryContent = document.getElementById('summary-content');
-            summaryContent.innerHTML = userAnswersHistory.map((item, idx) => `
-                <div class="flex justify-between items-start border-b border-slate-200/60 pb-1">
-                    <span class="text-slate-500">${idx + 1}. ${item.category}:</span>
-                    <span class="font-semibold text-slate-800 text-right">${item.answer}</span>
-                </div>
-            `).join('');
-        }
+      sectionSelection.classList.add('hidden');
+      sectionResult.classList.add('hidden');
+      sectionQuestion.classList.remove('hidden');
+      btnReset.classList.remove('hidden');
+      btnReset.classList.add('flex');
 
-        // Toggle History Summary Visibility
-        function toggleSummary() {
-            const content = document.getElementById('summary-content');
-            const chevron = document.getElementById('summary-chevron');
-            content.classList.toggle('hidden');
-            chevron.classList.toggle('rotate-180');
-        }
+      renderNode();
+    }
 
-        // Reset App to Initial Selector
-        function resetApp() {
-            currentProtocolKey = null;
-            currentStepIndex = 0;
-            userAnswersHistory = [];
+    // RENDER CURRENT NODE
+    function renderNode() {
+      const proto = protocols[currentProtocolKey];
+      const node = proto.nodes[currentNodeKey];
 
-            screenSelector.classList.remove('hidden');
-            screenWizard.classList.add('hidden');
-            screenResult.classList.add('hidden');
-            document.getElementById('summary-content').classList.add('hidden');
-        }
-    </script>
+      if (!node) {
+        console.error("Node não encontrado:", currentNodeKey);
+        return;
+      }
+
+      // Check if node is a result
+      if (node.type === "result") {
+        showResult(node);
+        return;
+      }
+
+      // Update question UI
+      protocolBadge.textContent = proto.title;
+      stepCounter.textContent = `Etapa ${stepCount}`;
+      questionTitle.textContent = node.title;
+      questionDescription.textContent = node.desc || '';
+
+      optionsContainer.innerHTML = '';
+
+      if (node.options && node.options.length > 0) {
+        node.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = "flex-1 bg-black hover:bg-gray-800 text-white font-semibold py-3.5 px-6 rounded-xl transition shadow-sm hover:shadow active:scale-[0.99] text-center text-sm";
+          btn.textContent = opt.label;
+          btn.onclick = () => {
+            stepCount++;
+            currentNodeKey = opt.next;
+            renderNode();
+          };
+          optionsContainer.appendChild(btn);
+        });
+      }
+    }
+
+    // SHOW FINAL RESULT CARD
+    function showResult(node) {
+      sectionQuestion.classList.add('hidden');
+      sectionResult.classList.remove('hidden');
+
+      if (node.status === "approved") {
+        // Green Styling for Approval
+        sectionResult.className = "rounded-2xl shadow-sm border p-6 fade-in bg-emerald-50 border-emerald-200 text-emerald-950";
+        resultIcon.className = "w-12 h-12 rounded-full flex items-center justify-center text-2xl flex-shrink-0 bg-emerald-600 text-white";
+        resultIcon.innerHTML = '<i class="fa-solid fa-check"></i>';
+
+        resultBadge.className = "text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md mb-2 inline-block bg-emerald-200 text-emerald-800";
+        resultBadge.textContent = "LIBERADO / APROVADO";
+
+        resultTitle.className = "text-xl font-bold mb-2 text-emerald-900";
+        resultTitle.textContent = node.title;
+
+        resultMessage.className = "text-sm leading-relaxed mb-6 text-emerald-800 font-medium";
+        resultMessage.textContent = node.message;
+
+      } else {
+        // Red / Amber Styling for Blocked
+        sectionResult.className = "rounded-2xl shadow-sm border p-6 fade-in bg-rose-50 border-rose-200 text-rose-950";
+        resultIcon.className = "w-12 h-12 rounded-full flex items-center justify-center text-2xl flex-shrink-0 bg-rose-600 text-white";
+        resultIcon.innerHTML = '<i class="fa-solid fa-ban"></i>';
+
+        resultBadge.className = "text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md mb-2 inline-block bg-rose-200 text-rose-800";
+        resultBadge.textContent = "BLOQUEIO / PENDÊNCIA";
+
+        resultTitle.className = "text-xl font-bold mb-2 text-rose-900";
+        resultTitle.textContent = node.title;
+
+        resultMessage.className = "text-sm leading-relaxed mb-6 text-rose-900 font-medium bg-white/70 p-4 rounded-xl border border-rose-200";
+        resultMessage.textContent = node.message;
+      }
+    }
+
+    // RESET APP
+    function resetApp() {
+      currentProtocolKey = null;
+      currentNodeKey = null;
+      stepCount = 1;
+
+      sectionQuestion.classList.add('hidden');
+      sectionResult.classList.add('hidden');
+      sectionSelection.classList.remove('hidden');
+
+      btnReset.classList.add('hidden');
+      btnReset.classList.remove('flex');
+    }
+  </script>
 </body>
 </html>
-
